@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd step2
+
+FILES="ERA5*"
+
+for i in $FILES; do
+	cdo remapbil,"../../both/refc_6hrl/all_years_refc_03_season.nc" ${i} temp_${i}
+	cdo delete,timestep=1 temp_${i} ../step3/EU_ab6_${i}
+	echo removing temporary nc
+	rm temp_${i}
+done

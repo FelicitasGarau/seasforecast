@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd refc_6hrl
+
+for i in {3..6}
+do
+ncrcat -h -O GR_ab6_ensmean_****_0${i}_.nc all_years_refc_0${i}_season.nc
+done

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cd step0refc
+FILES=$(ls refc_*.nc)
+
+for i in $FILES; do
+        if compgen -G "../step2/ens_${i%.nc}_*" > /dev/null || compgen -G "../step3/EU_ens_${i%.nc}_*" > /dev/null; then
+		echo "file exists in some form"
+	else
+                echo "splitting ${i} into the ensemble members..."
+                cdo splitsel,860 ${i} "../step2/ens_${i%.nc}_"
+        fi
+done

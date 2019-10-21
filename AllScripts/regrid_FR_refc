@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd refc_6hrl
+
+for i in ab6*
+do
+	cdo sellonlatbox,-5,5,44,50 ${i} FR_${i}
+done
+

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd step6/
+
+for i in ab6*
+do
+	cdo sellonlatbox,-47,50,30,73 ${i} EU_${i}
+done
+

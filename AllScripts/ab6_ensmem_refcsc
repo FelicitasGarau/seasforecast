@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd step3
+
+for i in {3..5}; do
+   for j in ens_refc_****_0${i}*; do
+   if [ ! -e ../step6/ab6_${j} ]; then
+      cdo delete,timestep=1 ${j} ../step6/ab6_${j}
+   fi
+   done
+done

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for i in {3..6}; do
+   for j in all_years_refc_0${i}*; do
+      cdo sub ${j} all_years_era5.nc sub_lt_0${i}.nc
+   done
+done
+

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd ERA_6hrl
+
+list="6 7 8"
+
+for i in *years_era5_season.nc; do
+   for j in $list; do
+	echo "Reducing ${i} to the time span of ${j}..."
+	cdo selmonth,${j} "${i}" ../0${j}/"${i%_season.nc}_0${j}.nc"
+   done
+done

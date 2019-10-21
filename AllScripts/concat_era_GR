@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd ERA_6hrl
+
+for i in {3..6}
+do
+ncrcat -h -O GR_ab6_ERA5_****_JJA.nc all_years_era5_season.nc
+done

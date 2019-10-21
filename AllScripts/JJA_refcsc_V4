@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd step2
+
+for i in ens*; do
+	if [ ! -e "../step3/${i%.nc}_JJA.nc" ]; then
+		echo Reducing ${i} to the time span of JJA...
+		cdo selmonth,6,7,8 "${i}" "../step3/${i%.nc}_JJA.nc"
+	else
+		echo ${i} has been reduced already
+	fi
+done

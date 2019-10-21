@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for i in {3..6}; do
+   for j in abs_lt_0${i}.nc; do
+      cdo timmean ${j} mae_lt_0${i}.nc
+   done
+done

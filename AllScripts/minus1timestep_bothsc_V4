@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd refc_6hrl
+
+for i in {3..5}; do
+   for j in ensmean_****_0${i}*; do
+   if [ ! -e ab6_${j} ]; then
+      cdo delete,timestep=1 ${j} ab6_${j}
+   fi
+   done
+done

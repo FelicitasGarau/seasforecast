@@ -1,0 +1,7 @@
+#!/bin/bash
+
+mkdir step0refc
+cp reforecast_retrieve_V4.py step0refc/
+cd step0refc
+
+python reforecast_retrieve_V4.py
