@@ -1,0 +1,90 @@
+# setting pwd
+source("setup_cdo.R")
+
+# setting variables for bash scripts
+sub         <- paste0("./sub_cdosc")
+seassub     <- paste0("./season_sub_cdosc")
+sqr         <- paste0("./sqr_cdosc")
+mean        <- paste0("./mean_cdosc")
+rmse        <- paste0("./rmse_cdosc")
+bias        <- paste0("./bias_cdosc")
+abs         <- paste0("./abs_cdosc")
+mae         <- paste0("./mae_cdosc")
+minus1      <- paste0("./minus1timestep_refcsc_V3")
+concatrefc  <- paste0("./concat_refc")
+concatera   <- paste0("./concat_era")
+rename6     <- paste0("./renaming_06_refcsc_V3")
+regridera   <- paste0("./regrid_GR_erasc_V3")
+regridrefc  <- paste0("./regrid_GR_refcsc_V3")
+splitera    <- paste0("./split_era")
+splitrefc   <- paste0("./split_refc")
+
+### process from 6hrl data on ###
+
+setwd(pwd)
+print(paste0("pwd = ",pwd))
+print("minus1")
+#system(minus1)
+print("rename6")
+#system(rename6)
+print("regridrefc")
+#system(regridrefc)
+print("concatrefc")
+#system(concatrefc)
+print("splitrefc")
+#system(splitrefc)
+print("regridera")
+#system(regridera)
+print("concatera")
+#system(concatera)
+print("splitera")
+#system(splitera)
+setwd(dirrefc)
+system(paste0("cp all_years* ",dirseas))
+setwd(direra)
+system(paste0("cp all_years* ",dirseas))
+
+### cdo metrics ###
+
+# season
+setwd(dirseas)
+print(getwd())
+system(seassub)
+system(sqr)
+system(mean)
+system(rmse)
+system(bias)
+system(abs)
+system(mae)
+
+# 06
+setwd(dir06)
+system(sub)
+system(sqr)
+system(mean)
+system(rmse)
+system(bias)
+system(abs)
+system(mae)
+
+# 07
+setwd(dir07)
+system(sub)
+system(sqr)
+system(mean)
+system(rmse)
+system(bias)
+system(abs)
+system(mae)
+
+# 08
+setwd(dir08)
+system(sub)
+system(sqr)
+system(mean)
+system(rmse)
+system(bias)
+system(abs)
+system(mae)
+
+print("all done")

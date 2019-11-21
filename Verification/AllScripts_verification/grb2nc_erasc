@@ -1,0 +1,15 @@
+#!/bin/bash
+
+module load userspace/spack
+module load cdo-1.9.4-gcc-8.2.0-gdkp7ik
+
+cd step1
+FILES="*JJA.grib"
+
+for i in $FILES; do
+	ls ${i} >> "../step0/raw_files_era.txt"
+	echo "${i} is being transformed..."
+	cdo -f nc copy "$i" "../step2/${i%.grib}.nc";
+        cp "../step2/${i%.grib}.nc" "../../both/ERA_6hrl/${i%.grib}.nc";
+
+done

@@ -1,0 +1,77 @@
+#!/bin/bash
+
+export ECMWF_API_URL="https://api.ecmwf.int/v1"
+echo ECMWF_API_URL="https://api.ecmwf.int/v1"
+export ECMWF_API_KEY="0c8d2366eb3b344d4fb3c9e66899e769"
+echo ECMWF_API_KEY="0c8d2366eb3b344d4fb3c9e66899e769"
+export ECMWF_API_EMAIL="mauro.sulis@list.lu"
+echo ECMWF_API_EMAIL="mauro.sulis@list.lu"
+export PATH=/local/raid1/s6fefisc/seasforecast/mars/bin:$PATH
+echo PATH=/local/raid1/s6fefisc/seasforecast/mars/bin:$PATH
+
+# this example will interpolate the final fields to
+# a 0.25x0.25 regular lat-lon grid (GRID=0.25/0.25)
+GRID="0.25/0.25"
+
+# for europe only
+AREA="EUROPE"
+  
+# fixed selection from the same block
+PARAMS="130/131/132/133/138/246/247"
+# variable names = yet to come
+
+STEP="0/to/168/by/12"
+# in hours from initialization
+
+LEVEL="1/to/91/by/2"
+# model levels
+
+# field limit = range(step)*range(number)*other field ranges
+
+NUMBER="0 1 2 3 4 5 6 7 8 9 10 11"
+# number = ensemble members 
+# with 0 = unpertubated run
+  
+YEAR="2018"
+MONTH="05"
+DAY="01"
+ 
+#date/ensemble loop - can be changed to whatever user wants to loop over
+for y in ${YEAR}; do
+	for m in ${MONTH}; do
+	my_date=${y}${m}${DAY}
+		for n in ${my_date}; do
+			for e in ${NUMBER}; do
+				if [ ! -e seas5_ml_${n}_en${e}.nc ]; then
+				echo seas5_ml_${n}_en${e}.nc does not exist yet so I will get it
+				cat << EOF > my_request_${n}_en${e}.mars
+RETRIEVE,
+    CLASS      = OD,
+    DATE       = ${n},
+    EXPVER     = 1,
+    LEVTYPE    = ML,
+    METHOD     = 1,
+    NUMBER     = ${e},
+    LEVEL      = ${LEVEL}
+    ORIGIN     = ECMF,
+    PARAM      = ${PARAMS},
+    STEP       = ${STEP},
+    STREAM     = MMSF,
+    SYSTEM     = 5,
+    TIME       = 0000,
+    GRID       = ${GRID},
+    TYPE       = FC,
+    TARGET     = "seas5_ml_${n}_en${e}.grb"
+EOF
+				else
+				echo my_request_${n}_en${e}.mars exists already;
+				continue
+				fi
+			mars my_request_${n}_en${e}.mars
+				if [ $? -eq 0 ]; then
+				rm -f my_request_${n}_en${e}.mars
+				fi
+			done
+		done
+	done
+done

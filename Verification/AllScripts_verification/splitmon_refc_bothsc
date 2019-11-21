@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd refc_6hrl
+
+list="6 7 8"
+
+for i in {3..6}; do
+   for j in *refc_0${i}_season.nc; do
+      for k in $list; do
+         echo "Reducing ${j} to the time span of ${k}..."
+	 cdo selmonth,${k} "${j}" ../0${k}/"${j%_season.nc}_0${k}.nc"
+      done
+   done
+done

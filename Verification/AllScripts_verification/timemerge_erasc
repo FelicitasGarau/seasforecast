@@ -1,0 +1,20 @@
+#!/bin/bash
+
+cd step0era
+YEAR=$(seq 1993 2016)
+
+for i in ${YEAR}; do
+	if [ ! -e "../step1/ERA5_${i}_JJA.grib" ] || [ ! -e "../step2/ERA_${i}_JJA.nc" ] && [ -e ERA5_${i}_06.grib ]; then
+		FILES=$(ls ERA5_${i}_*.grib)
+		cat ${FILES} > "../step1/ERA5_${i}_JJA.grib"
+			for j in ${FILES}; do
+				if [ -e "../step1/ERA5_${i}_JJA.grib" ] && [ -e ${j} ]; then
+					echo "here I would remove ${j}"
+				else
+					echo "Either JJA file does not exist yet or ${j} is already removed"
+				fi
+			done
+	else
+		echo "The JJA file seems to already exist"
+	fi
+done

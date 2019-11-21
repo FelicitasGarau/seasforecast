@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cd step1
+FILES="ens*.grb"
+
+for i in $FILES; do
+    if [ ! -e "../step2/${i%.grb}.nc" ]
+    then
+	ls ${i} >> "../step0/raw_files_refc.txt"
+	echo "${i} is being transformed..."
+	cdo -f nc copy "$i" "../step2/${i%.grb}.nc";
+    fi
+done

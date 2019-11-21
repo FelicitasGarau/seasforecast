@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd step3 
+
+for j in ens_refc_****_06*; do
+   if [ ! -e ../step6/ab6_${j} ]; then
+      cp ${j} ../step6/ab6_${j}
+   fi
+done

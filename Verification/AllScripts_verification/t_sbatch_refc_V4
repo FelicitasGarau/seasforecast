@@ -1,0 +1,35 @@
+#!/bin/bash -l
+
+#SBATCH -J refcRetrieval
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --mem=32GB
+#SBATCH --time=1-00:00:00
+#SBATCH -p defq
+echo "== Starting run at $(date)"
+echo "== Job ID: ${SLURM_JOBID}"
+echo "== Node list: ${SLURM_NODELIST}"
+echo "== Submit dir. : ${SLURM_SUBMIT_DIR}"
+# Your application can be started below
+
+echo this is the SLURM_SUBMIT_DIR ${SLURM_SUBMIT_DIR}
+cd ${SLURM_SUBMIT_DIR}
+
+module load userspace/spack
+module load nco-4.6.7-gcc-8.2.0-jbsgduo
+module load r-3.6.0-gcc-8.2.0-gvbags2
+module load cdo-1.9.4-gcc-8.2.0-gdkp7ik
+module load userspace/tr17.10
+module load python2/2.7.14
+mkdir pythonenv/
+virtualenv-2.7 pythonenv
+source pythonenv/bin/activate
+pip install cdsapi
+
+# creating folder for reforecast raw data
+mkdir step0refc
+cp t_reforecast_retrieve_V4.py step0refc/
+cd step0refc
+
+python t_reforecast_retrieve_V4.py
+

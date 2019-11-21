@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd step6/
+
+for i in ab6*
+do
+	cdo sellonlatbox,0,13,45,55 ${i} GR_${i}
+done
+

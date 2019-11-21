@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for i in {3..6}; do
+   for j in sqr_lt_0${i}.nc; do
+      cdo timmean ${j} mean_lt_0${i}.nc
+   done
+done

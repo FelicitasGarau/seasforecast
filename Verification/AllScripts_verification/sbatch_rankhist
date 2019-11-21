@@ -1,0 +1,22 @@
+#!/bin/bash -l
+#
+#SBATCH -J rankhist
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH --mem=32GB
+#SBATCH --time=1-23:00:00
+#SBATCH -p defq
+echo "== Starting run at $(date)"
+echo "== Job ID: ${SLURM_JOBID}"
+echo "== Node list: ${SLURM_NODELIST}"
+echo "== Submit dir. : ${SLURM_SUBMIT_DIR}"
+# Your application can be started below
+
+module load userspace/spack
+module load nco-4.6.7-gcc-8.2.0-jbsgduo
+module load r-3.6.0-gcc-8.2.0-gvbags2
+module load cdo-1.9.4-gcc-8.2.0-gdkp7ik
+
+cd ${SLURM_SUBMIT_DIR}
+
+Rscript ./rankhisto.R
